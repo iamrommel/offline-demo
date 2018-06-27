@@ -1,6 +1,6 @@
 import React from 'react'
 import {Query} from 'react-apollo'
-import {Button, Table} from 'react-bootstrap'
+import {Button, ButtonGroup, Table} from 'react-bootstrap'
 import moment from 'moment'
 import {GET_USERS} from './queries'
 
@@ -19,6 +19,7 @@ export const ListUser = () => {
               <tr>
                 <th>Name</th>
                 <th>Date</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
@@ -34,11 +35,23 @@ export const ListUser = () => {
 }
 
 const UserItem = ({item}) => {
+  const onUpdate = () => {
+
+  }
+  const onDelete = () => {
+
+  }
 
   return (
     <tr>
       <td>{item.name}</td>
       <td>{moment(item.dateOfBirth).format('d-MMM-YYYY  h:mm:ss.S a')}</td>
+      <td>
+        <ButtonGroup>
+          <Button bsStyle="warning" onClick={onUpdate}>Update</Button>
+          <Button bsStyle="danger" onClick={onDelete}>Delete</Button>
+        </ButtonGroup>
+      </td>
     </tr>
   )
 }

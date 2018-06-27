@@ -5,31 +5,36 @@ import {ApolloLink} from 'apollo-link'
 import {persistCache} from 'apollo-cache-persist'
 
 
-import QueueMutationLink from './QueueMutationLink'
+import {QueueMutationLink} from './QueueMutationLink'
+import {SyncOfflineMutation} from './SyncOfflineMutation'
 
 export const setupApolloClient = async () => {
 
+  const storage = window.localStorage
   const uri = `https://api.graph.cool/simple/v1/cjicrt45i0svu01337s6tl944`
   const httpLink = new HttpLink({uri})
 
 
-  const queueLink = new QueueMutationLink({storage: window.localStorage})
-
-  window.addEventListener('online', () => queueLink.open())
-  window.addEventListener('offline', () => queueLink.close())
-
-
+  const queueLink = new QueueMutationLink({storage})
   const cache = new InMemoryCache()
-  persistCache({
+
+  let link = ApolloLink.from([queueLink, httpLink,])
+
+  const apolloClient = new ApolloClient({link, cache,})
+  await persistCache({
     cache,
     storage: window.localStorage,
   })
 
+  window.addEventListener('online', () => queueLink.open({apolloClient}))
+  window.addEventListener('offline', () => queueLink.close())
 
-  let link = ApolloLink.from([
-    queueLink,
-    httpLink,
-  ])
 
-  return new ApolloClient({link, cache})
+  const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})
+  await syncOfflineMutation.init()
+  await syncOfflineMutation.sync()
+
+
+  return apolloClient
+
 }

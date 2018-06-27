@@ -50,6 +50,7 @@ export default class QueueMutationLink extends ApolloLink {
 
   cancelOperation = (entry) => {
     this.opQueue = this.opQueue.filter(e => e !== entry)
+
   }
 
   enqueue = (entry) => {

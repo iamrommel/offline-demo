@@ -2,7 +2,6 @@ import React from 'react'
 import {withApollo} from 'react-apollo'
 import {SyncOfflineMutation} from './SyncOfflineMutation'
 
-
 export const withSyncOfflineMutation = ({storage}) => {
 
   return (WrappedComponent) => {

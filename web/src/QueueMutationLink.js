@@ -1,59 +1,51 @@
-import {ApolloLink, Observable,} from 'apollo-link'
+import { ApolloLink, Observable } from 'apollo-link'
+import { SyncOfflineMutation } from './SyncOfflineMutation'
 
-export default class QueueMutationLink extends ApolloLink {
-
-  constructor({storage} = {}) {
+export class QueueMutationLink extends ApolloLink {
+  constructor ({storage} = {}) {
     super()
 
-    if (!storage) throw new Error("Storage can be window.localStorage or AsyncStorage but was not set")
+    if (!storage) throw new Error('Storage can be window.localStorage or AsyncStorage but was not set')
     this.storage = storage
     this.storeKey = '@offlineQueueKey'
-    this.opQueue = []
     this.queue = []
     this.isOpen = true
-
   }
 
-
-  forwardOperation = () => {
-    this.opQueue.forEach(({operation, forward, observer}) => {
-      forward = forward || Observable.of
-
-      //if the the param forwardOp is available then use it, else fallback to the forwarded that ws included in the loop
-      forward(operation).subscribe(observer)
-    })
-  }
-
-  open = () => {
-    this.isOpen = true
-    this.forwardOperation()
+  resync = async ({apolloClient, syncOfflineMutation}) => {
+    syncOfflineMutation = syncOfflineMutation || new SyncOfflineMutation({apolloClient, storage: this.storage})
+    await syncOfflineMutation.init()
+    await syncOfflineMutation.sync()
     this.clearQueue()
   }
 
+  open = async ({apolloClient} = {}) => {
+    if (!apolloClient) return
+
+    this.isOpen = true
+
+    await this.resync({apolloClient})
+
+  }
   close = () => {
     this.isOpen = false
   }
-
   request = (operation, forward) => {
-
     if (this.isOpen) {
       return forward(operation)
     }
+    else {
+      //if it is close enqueue first before forwarding
+      this.enqueue({operation})
+      //return forward(operation)
 
+      return new Observable(() => {
+        return () => {};
+      });
 
-    return new Observable(observer => {
-      const operationEntry = {operation, forward, observer}
-      this.enqueue(operationEntry)
-      return () => this.cancelOperation(operationEntry)
-    })
+    }
   }
-
-  cancelOperation = (entry) => {
-    this.opQueue = this.opQueue.filter(e => e !== entry)
-  }
-
   enqueue = (entry) => {
-    this.opQueue.push(entry)
     const item = {...entry}
     const {operation} = item
     const {query, variables} = operation || {}
@@ -73,8 +65,7 @@ export default class QueueMutationLink extends ApolloLink {
 
   }
   clearQueue = () => {
-    this.opQueue = []
     this.queue = []
-    this.storage.removeItem(this.storeKey)
   }
+
 }

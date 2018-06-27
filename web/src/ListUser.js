@@ -2,7 +2,10 @@ import React from 'react'
 import {Query} from 'react-apollo'
 import {Button, ButtonGroup, Table} from 'react-bootstrap'
 import moment from 'moment'
-import {GET_USERS} from './queries'
+import {Utils} from 'pcmli.umbrella.uni-core'
+import {withApollo} from 'react-apollo'
+
+import {GET_USERS, DELETE_USER, UPDATE_USER} from './queries'
 
 export const ListUser = () => {
   return (
@@ -34,12 +37,23 @@ export const ListUser = () => {
   )
 }
 
-const UserItem = ({item}) => {
+let UserItem = ({item, client}) => {
   const onUpdate = () => {
+    const variables = {name: `${item.name}_${Utils.generateId(3)}`, dateOfBirth: new moment(), id: item.id}
 
+    const optimisticResponse = {
+      __typename: 'Mutation',
+      updateUser: {
+        __typename: 'User',
+        ...variables
+      }
+    }
+
+    client.mutate({mutation: UPDATE_USER, variables, optimisticResponse})
   }
   const onDelete = () => {
-
+    const variables = {id: item.id}
+    client.mutate({mutation: DELETE_USER, variables})
   }
 
   return (
@@ -56,5 +70,6 @@ const UserItem = ({item}) => {
   )
 }
 
+UserItem = withApollo(UserItem)
 
-//Ryla Escalona Manalo
+

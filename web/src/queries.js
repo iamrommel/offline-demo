@@ -20,8 +20,27 @@ export const GET_USERS = gql`
 }
 `
 
+export const DELETE_USER = gql`
+mutation deleteUser($id: ID! )  {
+  deleteUser(id: $id) {
+    dateOfBirth
+    id
+    name
+  }
+}
+`
 
-export const  generateId = (length = 8) => {
+export const UPDATE_USER = gql`
+mutation updateUser($dateOfBirth: DateTime, $id: ID!, $name: String) {
+  updateUser(dateOfBirth: $dateOfBirth, id: $id, name: $name) {
+    dateOfBirth
+    id
+    name
+  }
+}
+`
+
+export const generateId = (length = 8) => {
   let result = ''
   const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 

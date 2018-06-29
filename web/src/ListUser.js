@@ -37,9 +37,24 @@ export const ListUser = () => {
   )
 }
 
-let UserItem = ({item, client}) => {
-  const onUpdate = () => {
-    const variables = {name: `${item.name}_${Utils.generateId(3)}`, dateOfBirth: new moment(), id: item.id}
+class UserItem extends React.Component {
+
+  state = {loading: false, isOffline: false}
+
+
+  constructor() {
+    super()
+    window.addEventListener('online', () => this.setState({isOffline: false}))
+    window.addEventListener('offline', () => this.setState({isOffline: true}))
+  }
+
+
+  onUpdate = async ({item}) => {
+    const {client} = this.props
+    const {isOffline} = this.state
+    const variables = {name: `${item.name}_${Utils.generateId(1)}`, dateOfBirth: new moment(), id: item.id}
+
+    //use the variable input as the value of optimisticResponse added on the props
 
     const optimisticResponse = {
       __typename: 'Mutation',
@@ -48,26 +63,56 @@ let UserItem = ({item, client}) => {
         ...variables
       }
     }
-
-    client.mutate({mutation: UPDATE_USER, variables, optimisticResponse})
+    this.setState({loading: true})
+    if (isOffline) {
+      client.mutate({mutation: UPDATE_USER, variables, optimisticResponse, errorPolicy: 'ignore'})
+      this.setState({loading: false})
+    }
+    else {
+      try {
+        await client.mutate({
+          mutation: UPDATE_USER,
+          variables,
+          optimisticResponse,
+          errorPolicy: 'ignore'
+        })
+      }
+      finally {
+        this.setState({loading: false})
+      }
+    }
   }
-  const onDelete = () => {
+
+
+  onDelete = async ({item}) => {
+    const {client} = this.props
     const variables = {id: item.id}
-    client.mutate({mutation: DELETE_USER, variables})
+    this.setState({loading: true})
+    await client.mutate({mutation: DELETE_USER, variables})
+    this.setState({loading: false})
   }
 
-  return (
-    <tr>
-      <td>{item.name}</td>
-      <td>{moment(item.dateOfBirth).format('d-MMM-YYYY  h:mm:ss.S a')}</td>
-      <td>
-        <ButtonGroup>
-          <Button bsStyle="warning" onClick={onUpdate}>Update</Button>
-          <Button bsStyle="danger" onClick={onDelete}>Delete</Button>
-        </ButtonGroup>
-      </td>
-    </tr>
-  )
+
+  render() {
+
+    const {item} = this.props
+    const {loading} = this.state
+
+    return (
+      <tr>
+        <td>{item.name}</td>
+        <td>{moment(item.dateOfBirth).format('d-MMM-YYYY  h:mm:ss.S a')}</td>
+        <td>
+          <ButtonGroup>
+            <Button bsStyle="warning" disabled={loading} onClick={() => this.onUpdate({item})}>Update</Button>
+            <Button bsStyle="danger" disabled={loading} onClick={() => this.onDelete({item})}>Delete</Button>
+          </ButtonGroup>
+        </td>
+      </tr>
+    )
+  }
+
+
 }
 
 UserItem = withApollo(UserItem)

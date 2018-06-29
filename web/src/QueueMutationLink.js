@@ -1,8 +1,8 @@
-import { ApolloLink, Observable } from 'apollo-link'
-import { SyncOfflineMutation } from './SyncOfflineMutation'
+import {ApolloLink, Observable} from 'apollo-link'
+import {SyncOfflineMutation} from './SyncOfflineMutation'
 
 export class QueueMutationLink extends ApolloLink {
-  constructor ({storage} = {}) {
+  constructor({storage} = {}) {
     super()
 
     if (!storage) throw new Error('Storage can be window.localStorage or AsyncStorage but was not set')
@@ -37,11 +37,11 @@ export class QueueMutationLink extends ApolloLink {
     else {
       //if it is close enqueue first before forwarding
       this.enqueue({operation})
+      //return {offline: true}
       //return forward(operation)
-
       return new Observable(() => {
-        return () => {};
-      });
+        return () => ({isOffline: true})
+      })
 
     }
   }

@@ -4,6 +4,7 @@ import {HttpLink} from 'apollo-link-http'
 import {ApolloLink} from 'apollo-link'
 import {persistCache} from 'apollo-cache-persist'
 import {AsyncStorage} from 'react-native'
+import {Toast} from 'native-base'
 
 import {QueueMutationLink} from './QueueMutationLink'
 import {onConnectionChange} from './onConnectionChange'
@@ -17,16 +18,13 @@ export const setupApolloClient = async () => {
   const storage = AsyncStorage
 
   const queueLink = new QueueMutationLink({storage})
-  const onDisconnect = async () => {
-    queueLink.close()
-  }
-  const onConnect = async () => {
-    queueLink.open()
-  }
 
-  onConnectionChange({onDisconnect, onConnect})
 
-  const cache = new InMemoryCache()
+  const cache = new InMemoryCache({
+    dataIdFromObject: object => {
+      return object.name
+    }
+  })
   await persistCache({
     cache,
     storage,
@@ -39,6 +37,15 @@ export const setupApolloClient = async () => {
   ])
 
   const apolloClient = new ApolloClient({link, cache})
+
+  const onDisconnect = async () => {
+    queueLink.close()
+  }
+  const onConnect = async () => {
+    await queueLink.open({apolloClient})
+  }
+
+  onConnectionChange({onDisconnect, onConnect})
 
   //sync all local mutation on start up
   const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})

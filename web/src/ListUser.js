@@ -20,6 +20,7 @@ export const ListUser = () => {
             <Table striped bordered condensed hover>
               <thead>
               <tr>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Date</th>
                 <th>Action</th>
@@ -100,6 +101,7 @@ class UserItem extends React.Component {
 
     return (
       <tr>
+        <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{moment(item.dateOfBirth).format('d-MMM-YYYY  h:mm:ss.S a')}</td>
         <td>

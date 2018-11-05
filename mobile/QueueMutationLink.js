@@ -17,6 +17,7 @@ export class QueueMutationLink extends ApolloLink {
     await syncOfflineMutation.init()
     await syncOfflineMutation.sync()
     this.clearQueue()
+
   }
 
   open = async ({apolloClient} = {}) => {
@@ -25,6 +26,8 @@ export class QueueMutationLink extends ApolloLink {
     this.isOpen = true
 
     await this.resync({apolloClient})
+
+
 
   }
   close = () => {

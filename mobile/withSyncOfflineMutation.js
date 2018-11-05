@@ -19,7 +19,6 @@ export const withSyncOfflineMutation = ({storage}) => {
 
         const {syncOfflineMutation} = this.state || {}
 
-
         return (
           <WrappedComponent
             syncOfflineMutation={syncOfflineMutation}

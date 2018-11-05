@@ -27,6 +27,7 @@ const UserItem = ({item}) => {
   return (
     <ListItem>
       <Body>
+      <Text>{item.id}</Text>
       <Text>{item.name}</Text>
       </Body>
       <Left>

@@ -43,7 +43,7 @@ export class AddUser extends React.Component {
             <Button transparent onPress={() => {
               createUser({variables: {name: this.state.name, dateOfBirth: this.state.dateOfBirth}})
               const ctr = this.state.counter + 1
-              this.setState({name: `User ${ctr}`, dateOfBirth: new Date(), counter: ctr})
+              this.setState({name: `User_${generateId(4)}`, dateOfBirth: new Date(), counter: ctr})
             }}>
               <Icon name='plus'/>
             </Button>

@@ -5,7 +5,7 @@ import {ApolloLink} from 'apollo-link'
 import {persistCache} from 'apollo-cache-persist'
 import {AsyncStorage} from 'react-native'
 
-import QueueLink from './QueueMutationLink'
+import {QueueMutationLink} from './QueueMutationLink'
 import {onConnectionChange} from './onConnectionChange'
 import {SyncOfflineMutation} from './SyncOfflineMutation'
 
@@ -16,7 +16,7 @@ export const setupApolloClient = async () => {
   const httpLink = new HttpLink({uri})
   const storage = AsyncStorage
 
-  const queueLink = new QueueLink({storage})
+  const queueLink = new QueueMutationLink({storage})
   const onDisconnect = async () => {
     queueLink.close()
   }
@@ -27,12 +27,11 @@ export const setupApolloClient = async () => {
   onConnectionChange({onDisconnect, onConnect})
 
   const cache = new InMemoryCache()
-  persistCache({
+  await persistCache({
     cache,
     storage,
     trigger: 'background',
   })
-
 
   let link = ApolloLink.from([
     queueLink,

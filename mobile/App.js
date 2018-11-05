@@ -32,7 +32,7 @@ export default class App extends React.Component {
         }}>
           <AddUser/>
           <ListUser/>
-          <SyncButton/>
+          <SyncButton client={apolloClient}/>
         </View>
       </ApolloProvider>
     )

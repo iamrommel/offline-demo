@@ -34,4 +34,3 @@ const UserItem = ({item}) => {
 }
 
 
-//Ryla Escalona Manalo

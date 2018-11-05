@@ -1,7 +1,10 @@
 import React from 'react'
-import {Button, Text, View} from 'react-native'
+import {Text} from 'react-native'
 import {Query} from 'react-apollo'
+import {ListItem, List, Body} from 'native-base'
+
 import {GET_USERS} from './queries'
+
 
 export const ListUser = () => {
   return (
@@ -10,14 +13,9 @@ export const ListUser = () => {
 
         const {allUsers = []} = data
 
-        // if (loading) return <Text>Loading...</Text>
-        if (error) return <Text>`Error! ${error.message}`</Text>
-
         return (
-          <View>
-            {allUsers.map((item, key) => <UserItem key={key}  {...{item}} />)}
-            <Button title="Refresh" onPress={() => refetch()}/>
-          </View>
+          <List dataArray={allUsers}
+                renderRow={(item) => <UserItem item={item}/>}/>
         )
       }}
     </Query>
@@ -25,11 +23,13 @@ export const ListUser = () => {
 }
 
 const UserItem = ({item}) => {
-
   return (
-    <View>
-      <Text>{item.name}, {  (new Date(item.dateOfBirth)).toString() } </Text>
-    </View>
+    <ListItem>
+      <Body>
+      <Text>{item.name}</Text>
+      <Text note>{(new Date(item.dateOfBirth)).toString()}</Text>
+      </Body>
+    </ListItem>
   )
 }
 

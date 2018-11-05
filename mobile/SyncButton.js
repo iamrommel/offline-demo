@@ -8,13 +8,12 @@ export class SyncButton extends React.Component {
 
   render() {
     const {syncOfflineMutation} = this.props
-    console.log(syncOfflineMutation, 'syncOfflineMutation')
 
     if (!syncOfflineMutation) return null
 
     return <Button transparent
                    onPress={() => syncOfflineMutation.sync()}>
-      <Icon name='sync'/>
+      <Icon name='refresh'/>
     </Button>
   }
 }

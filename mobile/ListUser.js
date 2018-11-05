@@ -1,7 +1,7 @@
 import React from 'react'
-import {Text} from 'react-native'
+import {Text, RefreshControl} from 'react-native'
 import {Query} from 'react-apollo'
-import {ListItem, List, Body, Left} from 'native-base'
+import {ListItem, List, Body, Left, Content} from 'native-base'
 import moment from 'moment'
 
 import {GET_USERS} from './queries'
@@ -13,8 +13,10 @@ export const ListUser = () => {
       {({refetch, loading, error, data = {}}) => {
         const {allUsers = []} = data
         return (
-          <List dataArray={allUsers}
-                renderRow={(item) => <UserItem item={item}/>}/>
+          <Content refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}>
+            <List dataArray={allUsers}
+                  renderRow={(item) => <UserItem item={item}/>}/>
+          </Content>
         )
       }}
     </Query>
@@ -34,4 +36,10 @@ const UserItem = ({item}) => {
   )
 }
 
-
+const Refresh = ({onRefresh, isRefreshing}) => {
+  return (
+    <RefreshControl refreshing={isRefreshing}
+                    onRefresh={onRefresh}
+    />
+  )
+}

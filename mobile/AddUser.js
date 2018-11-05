@@ -35,20 +35,6 @@ const setOptimisticResponse = ({name, dateOfBirth}) => {
 export class AddUser extends React.Component {
 
   state = {name: 'User 1', dateOfBirth: new Date(), counter: 1}
-
-  onPick = async () => {
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open({date: this.state.dateOfBirth})
-      if (action !== DatePickerAndroid.dismissedAction) {
-        this.setState({dateOfBirth: new Date(year, month, day)})
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open date picker', message)
-    }
-
-  }
-
-
   render() {
     return (
       <Mutation mutation={ADD_USER} update={update} optimisticResponse={setOptimisticResponse(this.state)}>

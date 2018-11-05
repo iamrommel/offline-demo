@@ -47,14 +47,14 @@ export default class App extends React.Component {
               <Container>
                 <Header>
                   <Left>
-                    <Button transparent>
-                      <Icon name='glass'/>
-                    </Button>
+                    <AddUser/>
                   </Left>
                   <Body>
-                  <Title>Header</Title>
+                  <Title>User List</Title>
                   </Body>
-                  <Right/>
+                  <Right>
+                    <SyncButton/>
+                  </Right>
                 </Header>
                 <MainContent/>
               </Container>

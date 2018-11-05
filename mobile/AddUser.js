@@ -1,6 +1,7 @@
 import React from 'react'
-import {TextInput, DatePickerAndroid, View, Button} from 'react-native'
+import {DatePickerAndroid, View} from 'react-native'
 import {Mutation} from 'react-apollo'
+import {Button, Icon} from 'native-base'
 
 import {ADD_USER, GET_USERS, generateId} from './queries'
 
@@ -50,25 +51,20 @@ export class AddUser extends React.Component {
 
   render() {
     return (
-      <View>
+      <Mutation mutation={ADD_USER} update={update} optimisticResponse={setOptimisticResponse(this.state)}>
+        {(createUser) => {
+          return (
+            <Button transparent onPress={() => {
+              createUser({variables: {name: this.state.name, dateOfBirth: this.state.dateOfBirth}})
+              const ctr = this.state.counter + 1
+              this.setState({name: `User ${ctr}`, dateOfBirth: new Date(), counter: ctr})
+            }}>
+              <Icon name='plus'/>
+            </Button>
+          )
+        }}
 
-
-        <Mutation mutation={ADD_USER} update={update} optimisticResponse={setOptimisticResponse(this.state)}>
-          {(createUser) => {
-            return (
-              <Button color="#FF1584" onPress={() => {
-                createUser({variables: {name: this.state.name, dateOfBirth: this.state.dateOfBirth}})
-                const ctr =   this.state.counter +1
-
-                this.setState({name: `User ${ctr}`, dateOfBirth: new Date(), counter: ctr})
-
-              }} title="Add New"/>
-            )
-          }}
-
-        </Mutation>
-
-      </View>
+      </Mutation>
     )
   }
 }

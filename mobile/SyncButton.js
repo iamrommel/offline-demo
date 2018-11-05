@@ -1,5 +1,6 @@
 import React from 'react'
-import {Button, AsyncStorage} from 'react-native'
+import {AsyncStorage} from 'react-native'
+import {Button, Icon} from 'native-base'
 
 import {withSyncOfflineMutation} from './withSyncOfflineMutation'
 
@@ -11,8 +12,10 @@ export class SyncButton extends React.Component {
 
     if (!syncOfflineMutation) return null
 
-    return <Button color="#DD1584"
-                   onPress={() => syncOfflineMutation.sync()} title="Sync Offline data"/>
+    return <Button transparent
+                   onPress={() => syncOfflineMutation.sync()}>
+      <Icon name='sync'/>
+    </Button>
   }
 }
 

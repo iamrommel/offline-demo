@@ -11,11 +11,19 @@ export class DeleteUserButton extends React.Component {
     const variables = {id: data.id}
     const refetchQueries = () => ['allUsers']
 
-    this.setState({loading: true})
-    await client.mutate({mutation: DELETE_USER, variables, refetchQueries})
-    rowMap[`${secId}${rowId}`].props.closeRow();
+    try {
+      this.setState({loading: true})
+      await client.mutate({mutation: DELETE_USER, variables, refetchQueries})
+    }
+    catch (e) {
+      console.log('therei s error', e)
+    }
+    finally {
+      rowMap[`${secId}${rowId}`].props.closeRow()
+      this.setState({loading: false})
 
-    this.setState({loading: false})
+    }
+
   }
 
   render() {

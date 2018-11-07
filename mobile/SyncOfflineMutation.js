@@ -1,5 +1,3 @@
-import {Toast} from 'native-base'
-
 export class SyncOfflineMutation {
   constructor({apolloClient, storage} = {}) {
     if (!apolloClient) throw new Error('Apollo Client instance is required when syncing data, please assign value to it')
@@ -59,11 +57,6 @@ export class SyncOfflineMutation {
     //then add again the uncommitted storage
     this.addOfflineData(uncommittedOfflineMutation)
 
-    //show sync notification
-    Toast.show({
-      text: 'Sync successful!',
-      buttonText: 'Okay'
-    })
 
   }
 

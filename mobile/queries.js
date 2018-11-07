@@ -20,6 +20,16 @@ export const GET_USERS = gql`
 }
 `
 
+export const DELETE_USER = gql`
+    mutation deleteUser($id: ID! )  {
+        deleteUser(id: $id) {
+            dateOfBirth
+            id
+            name
+        }
+    }
+`
+
 
 export const  generateId = (length = 8) => {
   let result = ''

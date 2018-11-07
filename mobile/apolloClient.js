@@ -4,7 +4,6 @@ import {HttpLink} from 'apollo-link-http'
 import {ApolloLink} from 'apollo-link'
 import {persistCache} from 'apollo-cache-persist'
 import {AsyncStorage} from 'react-native'
-import {Toast} from 'native-base'
 
 import {QueueMutationLink} from './QueueMutationLink'
 import {onConnectionChange} from './onConnectionChange'

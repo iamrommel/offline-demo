@@ -19,11 +19,7 @@ export const setupApolloClient = async () => {
   const queueLink = new QueueMutationLink({storage})
 
 
-  const cache = new InMemoryCache({
-    dataIdFromObject: object => {
-      return object.name
-    }
-  })
+  const cache = new InMemoryCache()
   await persistCache({
     cache,
     storage,

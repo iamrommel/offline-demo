@@ -1,6 +1,7 @@
 import React from 'react'
 import {Button, Icon} from 'native-base'
-import {DELETE_USER} from './queries'
+import {DELETE_USER, GET_USERS} from './queries'
+import {Alert} from 'react-native'
 
 export class DeleteUserButton extends React.Component {
 
@@ -10,18 +11,45 @@ export class DeleteUserButton extends React.Component {
     const {data, client, rowMap, secId, rowId} = this.props
     const variables = {id: data.id}
     const refetchQueries = () => ['allUsers']
+    const update = (proxy, {data: {deleteUser: {id}}}) => {
+
+      let {allUsers} = proxy.readQuery({
+        query: GET_USERS
+      })
+
+      proxy.writeQuery({query: GET_USERS, data: {allUsers: allUsers.filter(user => user.id !== id)}})
+
+    }
+
+    const optimisticResponse = {
+      __typename: 'Mutation',
+      deleteUser: {
+        __typename: 'User',
+        ...data
+      }
+    }
+
+    console.log(optimisticResponse, 'optimisticResponse')
 
     try {
       this.setState({loading: true})
-      await client.mutate({mutation: DELETE_USER, variables, refetchQueries})
+      console.log('starts mutation')
+      await client.mutate({mutation: DELETE_USER, variables, update, optimisticResponse})
+      console.log('ends mutation')
+      Alert.alert('Ends mutation', 'Ends mutation')
     }
     catch (e) {
-      console.log('therei s error', e)
+      console.log('there s error', e)
     }
     finally {
+
+      rowMap &&
+      rowMap[`${secId}${rowId}`] &&
+      rowMap[`${secId}${rowId}`].props &&
       rowMap[`${secId}${rowId}`].props.closeRow()
       this.setState({loading: false})
 
+      console.log('went to finally')
     }
 
   }

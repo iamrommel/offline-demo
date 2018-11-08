@@ -40,10 +40,10 @@ export class SyncOfflineMutation {
 
     //return as promise, but in the end clear the storage
     const uncommittedOfflineMutation = []
-
+    const refetchQueries = () => ['allUsers'] //TODO: I think this can be grabbed from somewhere
     await Promise.all(this.offlineData.map(async (item) => {
       try {
-        await this.apolloClient.mutate(item)
+        await this.apolloClient.mutate({...item, refetchQueries})
       }
       catch (e) {
         //set the error mutation to the stash

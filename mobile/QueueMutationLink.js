@@ -28,7 +28,6 @@ export class QueueMutationLink extends ApolloLink {
     await this.resync({apolloClient})
 
 
-
   }
   close = () => {
     this.isOpen = false
@@ -42,8 +41,13 @@ export class QueueMutationLink extends ApolloLink {
       this.enqueue({operation})
       //return {offline: true}
       //return forward(operation)
-      return new Observable(() => {
-        return () => ({isOffline: true})
+
+      return new Observable((observer) => {
+
+        //observer.complete()
+        // return () => {
+        //   return {isOffline: true}
+        // }
       })
 
     }

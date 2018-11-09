@@ -22,16 +22,14 @@ export class QueueMutationLink extends ApolloLink {
 
   open = async ({apolloClient} = {}) => {
     if (!apolloClient) return
-
     this.isOpen = true
-
     await this.resync({apolloClient})
-
-
   }
+
   close = () => {
     this.isOpen = false
   }
+
   request = (operation, forward) => {
     if (this.isOpen) {
       return forward(operation)
@@ -39,17 +37,8 @@ export class QueueMutationLink extends ApolloLink {
     else {
       //if it is close enqueue first before forwarding
       this.enqueue({operation})
-      //return {offline: true}
-      //return forward(operation)
-
       return new Observable((observer) => {
-
-        //observer.complete()
-        // return () => {
-        //   return {isOffline: true}
-        // }
       })
-
     }
   }
   enqueue = (entry) => {
@@ -68,6 +57,10 @@ export class QueueMutationLink extends ApolloLink {
 
       //update the value of local storage
       this.storage.setItem(this.storeKey, JSON.stringify(this.queue))
+      return true
+    }
+    else {
+      return false
     }
 
   }

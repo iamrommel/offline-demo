@@ -1,13 +1,14 @@
 import React from 'react'
 import {Text, RefreshControl} from 'react-native'
 import {Query, withApollo} from 'react-apollo'
-import {ListItem, List, Body, Left, Content, Button, Icon} from 'native-base'
+import {ListItem, List, Body, Left, Content} from 'native-base'
 import moment from 'moment'
 
 import {GET_USERS} from './queries'
 import {ListView} from 'react-native'
 import {DeleteUserButton} from './DeleteUserButton'
 
+//fetchPolicy="cache-and-network" errorPolicy="all"
 
 let ListUser = ({client}) => {
   const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})

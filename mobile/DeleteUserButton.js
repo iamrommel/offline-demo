@@ -36,7 +36,7 @@ export class DeleteUserButton extends React.Component {
       console.log('starts mutation')
       await client.mutate({mutation: DELETE_USER, variables, update, optimisticResponse})
       console.log('ends mutation')
-      Alert.alert('Ends mutation', 'Ends mutation')
+     //Alert.alert('Ends mutation', 'Ends mutation')
     }
     catch (e) {
       console.log('there s error', e)

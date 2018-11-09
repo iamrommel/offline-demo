@@ -1,5 +1,4 @@
 import React from 'react'
-import {DatePickerAndroid, View} from 'react-native'
 import {Mutation} from 'react-apollo'
 import {Button, Icon} from 'native-base'
 

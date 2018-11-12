@@ -8,7 +8,7 @@ export class DeleteUserButton extends React.Component {
   state = {loading: false}
 
   onDelete = async () => {
-    const {data, client, rowMap, secId, rowId} = this.props
+    const {data, client} = this.props
     const variables = {id: data.id}
     const refetchQueries = () => ['allUsers']
     const update = (proxy, {data: {deleteUser: {id}}}) => {
@@ -43,10 +43,7 @@ export class DeleteUserButton extends React.Component {
     }
     finally {
 
-      rowMap &&
-      rowMap[`${secId}${rowId}`] &&
-      rowMap[`${secId}${rowId}`].props &&
-      rowMap[`${secId}${rowId}`].props.closeRow()
+
       this.setState({loading: false})
 
       console.log('went to finally')

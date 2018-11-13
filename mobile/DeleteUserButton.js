@@ -1,7 +1,6 @@
 import React from 'react'
 import {Button, Icon} from 'native-base'
 import {DELETE_USER, GET_USERS} from './queries'
-import {Alert} from 'react-native'
 
 export class DeleteUserButton extends React.Component {
 
@@ -18,7 +17,6 @@ export class DeleteUserButton extends React.Component {
       })
 
       proxy.writeQuery({query: GET_USERS, data: {allUsers: allUsers.filter(user => user.id !== id)}})
-
     }
 
     const optimisticResponse = {
@@ -29,33 +27,22 @@ export class DeleteUserButton extends React.Component {
       }
     }
 
-    console.log(optimisticResponse, 'optimisticResponse')
-
     try {
       this.setState({loading: true})
-      console.log('starts mutation')
       await client.mutate({mutation: DELETE_USER, variables, update, optimisticResponse})
-      console.log('ends mutation')
-     //Alert.alert('Ends mutation', 'Ends mutation')
     }
     catch (e) {
       console.log('there s error', e)
     }
     finally {
-
-
       this.setState({loading: false})
-
-      console.log('went to finally')
     }
-
   }
 
   render() {
-    const {loading} = this.state
     return (
-      <Button full danger disabled={loading} onPress={this.onDelete}>
-        <Icon active name={loading ? 'refresh' : 'trash'}/>
+      <Button full danger onPress={this.onDelete}>
+        <Icon active name='trash'/>
       </Button>
     )
   }

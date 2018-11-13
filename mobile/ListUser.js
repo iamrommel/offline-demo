@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text, RefreshControl} from 'react-native'
 import {Query, withApollo} from 'react-apollo'
-import {ListItem, List, Body, Left, Content} from 'native-base'
+import {ListItem, List, Body, Left, Right, Content} from 'native-base'
 import moment from 'moment'
 
 import {GET_USERS} from './queries'
@@ -36,9 +36,9 @@ const UserItem = ({item, client}) => {
       <Text>{item.name}</Text>
       <Text note>{moment(new Date(item.dateOfBirth)).format('hh:mm:ss.SSS a')}</Text>
       </Body>
-      <Left>
+      <Right>
         <DeleteUserButton {...{data: item, client}}/>
-      </Left>
+      </Right>
     </ListItem>
   )
 }

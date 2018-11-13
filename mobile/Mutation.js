@@ -1,16 +1,18 @@
 import React from 'react'
 import {Mutation as MutationCore} from 'react-apollo'
+import {AsyncStorage} from 'react-native'
 
 // Pull serialized mutations from localstorage
 const KEY = '@offlineQueueKey'
 
 const getPending = async () => {
-  return JSON.parse(localStorage.getItem(KEY)) || []
+  const obj = await AsyncStorage.getItem(KEY)
+  return JSON.parse(obj) || []
 }
 
 // Store serialized mutations in localstorage
 const setPending = async (mutations) => {
-  localStorage.setItem(KEY, JSON.stringify(mutations))
+  return AsyncStorage.setItem(KEY, JSON.stringify(mutations))
 }
 
 // Delegate incoming responses to the correct update function

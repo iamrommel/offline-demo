@@ -1,9 +1,11 @@
 import gql from 'graphql-tag'
 
+//__optimistic @client
+
 export const ADD_USER = gql`
 mutation createUser($name: String, $dateOfBirth : DateTime ) {
   createUser(dateOfBirth: $dateOfBirth, name: $name) {
-    __optimistic
+    
     id
     name
     dateOfBirth

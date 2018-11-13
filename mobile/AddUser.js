@@ -1,6 +1,7 @@
 import React from 'react'
-import {Mutation} from 'react-apollo'
+//import {Mutation} from 'react-apollo'
 import {Button, Icon} from 'native-base'
+import {Mutation} from './Mutation'
 
 import {ADD_USER, GET_USERS, generateId} from './queries'
 

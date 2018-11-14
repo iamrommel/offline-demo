@@ -43,7 +43,11 @@ export const Mutation = props => (
         _.set(params, 'optimisticResponse.__optimistic', true)
 
         let pending = await getPending() || []
-        pending = pending.concat({id, params, mutation})
+        const newPending = {id, ...params, mutation}
+
+        console.log(newPending, 'newPending')
+
+        pending = pending.concat(newPending)
         await setPending(pending)
 
         //the update logic that was passed from mutation,

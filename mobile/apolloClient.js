@@ -39,6 +39,8 @@ export const setupApolloClient = async () => {
   //sync all local mutation on start up
   const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})
   await syncOfflineMutation.init()
+
+  //this should be synching when there is connection only
   //await syncOfflineMutation.sync()
 
   const onDisconnect = async () => {

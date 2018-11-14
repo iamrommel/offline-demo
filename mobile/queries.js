@@ -33,6 +33,15 @@ export const DELETE_USER = gql`
     }
 `
 
+export const update = (cache, {data: {createUser}}) => {
+  const {allUsers} = cache.readQuery({query: GET_USERS})
+  cache.writeQuery({
+    query: GET_USERS,
+    data: {allUsers: allUsers.concat([createUser])}
+  })
+}
+
+
 
 export const  generateId = (length = 8) => {
   let result = ''

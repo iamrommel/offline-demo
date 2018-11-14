@@ -35,13 +35,18 @@ const setOptimisticResponse = ({name, dateOfBirth}) => {
 export class AddUser extends React.Component {
 
   state = {name: 'User 1', dateOfBirth: new Date(), counter: 1}
+
   render() {
     return (
-      <Mutation mutation={ADD_USER} update={update} optimisticResponse={setOptimisticResponse(this.state)}>
+      <Mutation mutation={ADD_USER}>
         {(createUser) => {
           return (
             <Button transparent onPress={() => {
-              createUser({variables: {name: this.state.name, dateOfBirth: this.state.dateOfBirth}})
+              createUser({
+                variables: {name: this.state.name, dateOfBirth: this.state.dateOfBirth},
+                update: update,
+                optimisticResponse: setOptimisticResponse(this.state)
+              })
               const ctr = this.state.counter + 1
               this.setState({name: `User_${generateId(4)}`, dateOfBirth: new Date(), counter: ctr})
             }}>

@@ -1,13 +1,14 @@
 import React from 'react'
 import {Button, Icon} from 'native-base'
 import {DELETE_USER, GET_USERS} from './queries'
+import {Mutation} from './Mutation'
 
 export class DeleteUserButton extends React.Component {
 
   state = {loading: false}
 
-  onDelete = async () => {
-    const {data, client} = this.props
+  onDelete = async (mutate) => {
+    const {data} = this.props
     const variables = {id: data.id}
     const refetchQueries = () => ['allUsers']
     const update = (proxy, {data: {deleteUser: {id}}}) => {
@@ -29,7 +30,7 @@ export class DeleteUserButton extends React.Component {
 
     try {
       this.setState({loading: true})
-      await client.mutate({mutation: DELETE_USER, variables, update, optimisticResponse})
+      await mutate({variables, update, optimisticResponse})
     }
     catch (e) {
       console.log('there s error', e)
@@ -41,9 +42,16 @@ export class DeleteUserButton extends React.Component {
 
   render() {
     return (
-      <Button full danger onPress={this.onDelete}>
-        <Icon active name='trash'/>
-      </Button>
+      <Mutation mutation={DELETE_USER}>
+        {(mutate) => {
+          return (
+            <Button full danger onPress={() => this.onDelete(mutate)}>
+              <Icon active name='trash'/>
+            </Button>
+          )
+        }}
+
+      </Mutation>
     )
   }
 

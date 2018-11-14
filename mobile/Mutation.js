@@ -1,7 +1,6 @@
 import React from 'react'
 import {Mutation as MutationCore} from 'react-apollo'
 import {AsyncStorage} from 'react-native'
-import {update} from './queries'
 
 // Pull serialized mutations from localstorage
 const KEY = '@offlineQueueKey'
@@ -17,20 +16,14 @@ const setPending = async (mutations) => {
   return AsyncStorage.setItem(KEY, JSON.stringify(mutations))
 }
 
-// Delegate incoming responses to the correct update function
-function updateHandler(resp) {
-  // IMPORTANT: You need one of these for every custom update function you use!
-  if (resp.data.createUser) return update
-  else return () => {
-  }
-}
 
 // Return a dummy update function scoped to a request with a specific id
 const proxyUpdateForId = (id, update) => {
   return async (proxy, resp) => {
-    //updateHandler(resp, update)(proxy, resp)
 
+    //run the update function
     update(proxy, resp)
+
     if (resp.data.__optimistic) return
     let pending = await getPending() || []
     pending = pending.filter(mutation => mutation.id !== id)
@@ -47,10 +40,7 @@ export const Mutation = props => (
         const id = Math.random()
         const {mutation} = props
 
-        console.log(params, 'params')
-        //set the value for optimistic
         _.set(params, 'optimisticResponse.__optimistic', true)
-
 
         let pending = await getPending() || []
         pending = pending.concat({id, params, mutation})

@@ -10,7 +10,6 @@ export class DeleteUserButton extends React.Component {
   onDelete = async (mutate) => {
     const {data} = this.props
     const variables = {id: data.id}
-    const refetchQueries = () => ['allUsers']
     const update = (proxy, {data: {deleteUser: {id}}}) => {
 
       let {allUsers} = proxy.readQuery({

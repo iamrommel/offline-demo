@@ -1,15 +1,13 @@
 import React from 'react'
 import {Text, RefreshControl} from 'react-native'
-import {Query, withApollo} from 'react-apollo'
-import {ListItem, List, Body, Left, Right, Content} from 'native-base'
+import {Query} from 'react-apollo'
+import {ListItem, List, Body, Right, Content} from 'native-base'
 import moment from 'moment'
 
 import {GET_USERS} from './queries'
 import {DeleteUserButton} from './DeleteUserButton'
 
-//fetchPolicy="cache-and-network" errorPolicy="all"
-
-let ListUser = ({client}) => {
+export const ListUser = () => {
   return (
     <Query query={GET_USERS}>
       {({refetch, loading, error, data = {}}) => {
@@ -17,18 +15,16 @@ let ListUser = ({client}) => {
         return (
           <Content refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}>
             <List dataArray={allUsers}
-                  renderRow={(item) => <UserItem {...{item, client}}/>}/>
+                  renderRow={(item) => <UserItem {...{item}}/>}/>
           </Content>
         )
       }}
     </Query>
   )
 }
-ListUser = withApollo(ListUser)
-export {ListUser}
 
 
-const UserItem = ({item, client}) => {
+const UserItem = ({item}) => {
   return (
     <ListItem>
       <Body>
@@ -37,7 +33,7 @@ const UserItem = ({item, client}) => {
       <Text note>{moment(new Date(item.dateOfBirth)).format('hh:mm:ss.SSS a')}</Text>
       </Body>
       <Right>
-        <DeleteUserButton {...{data: item, client}}/>
+        <DeleteUserButton {...{data: item}}/>
       </Right>
     </ListItem>
   )

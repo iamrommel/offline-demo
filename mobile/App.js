@@ -12,9 +12,7 @@ import {MainContent} from './MainContent'
 import {OfflineWarning} from './OfflineWarning'
 import {onConnectionChange} from './onConnectionChange'
 import {SyncOfflineMutation} from './SyncOfflineMutation'
-import {withNetworkConnectivity, checkInternetConnection} from 'react-native-offline'
-
-
+import {checkInternetConnection} from 'react-native-offline'
 
 export default class App extends React.Component {
 

@@ -15,7 +15,7 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
-    "build" : "expo build:android",
+    "build": "expo build:android",
     "publish": "expo publish"
   },
   "jest": {
@@ -39,6 +39,7 @@
     "react": "16.3.1",
     "react-apollo": "^2.2.4",
     "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
+    "react-native-offline": "^3.14.1",
     "zen-observable": "^0.8.8"
   }
 }

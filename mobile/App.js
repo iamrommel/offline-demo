@@ -2,7 +2,7 @@ import React from 'react'
 import {ApolloProvider} from 'react-apollo'
 import Expo, {AppLoading, Font} from 'expo'
 import {StyleProvider, Container, Root, Header, Left, Title, Body, Right} from 'native-base'
-import {StatusBar} from 'react-native'
+import {AsyncStorage, StatusBar, Alert} from 'react-native'
 
 import {setupApolloClient} from './apolloClient'
 import {AddUser} from './AddUser'
@@ -11,7 +11,9 @@ import getTheme from './theme/components'
 import {MainContent} from './MainContent'
 import {OfflineWarning} from './OfflineWarning'
 import {onConnectionChange} from './onConnectionChange'
-import {SyncOfflineMutation} from '../web/src/SyncOfflineMutation'
+import {SyncOfflineMutation} from './SyncOfflineMutation'
+import {withNetworkConnectivity, checkInternetConnection} from 'react-native-offline'
+
 
 
 export default class App extends React.Component {
@@ -34,11 +36,17 @@ export default class App extends React.Component {
     this.setState({apolloClient})
 
     //sync all local mutation on start up
+    const storage = AsyncStorage
+
     const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})
     await syncOfflineMutation.init()
 
-    //this should be synching when there is connection only
-    //await syncOfflineMutation.sync()
+    //sync only when there is internet connection
+    const hasInternet =  await checkInternetConnection();
+    if (hasInternet)
+      await syncOfflineMutation.sync()
+
+
 
     const onDisconnect = async () => {
       this.setState({isOffline: true})

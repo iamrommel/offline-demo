@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, Text } from 'native-base'
 
-
 export class OfflineWarning extends React.Component {
 
   render () {

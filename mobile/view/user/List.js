@@ -3,7 +3,7 @@ import {Text, RefreshControl} from 'react-native'
 import {ListItem, List as NbList, Body, Right, Content} from 'native-base'
 import moment from 'moment'
 
-import {DeleteUserButton} from '../../DeleteUserButton'
+import {DeleteUserButton} from './DeleteUserButton'
 
 export class List extends React.Component {
 

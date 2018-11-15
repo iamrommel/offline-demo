@@ -1,6 +1,11 @@
 {
   "expo": {
     "sdkVersion": "27.0.0",
+    "icon": "./logo.png",
+    "splash": {
+      "image": "./splash.png",
+      "resizeMode": "cover"
+    },
     "android": {
       "package": "com.totalmilk.offlinedemo",
       "versionCode": 1

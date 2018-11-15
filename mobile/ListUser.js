@@ -6,21 +6,32 @@ import moment from 'moment'
 
 import {GET_USERS} from './queries'
 import {DeleteUserButton} from './DeleteUserButton'
+import {UserRepository} from './service/UserRepository'
 
-export const ListUser = () => {
-  return (
-    <Query query={GET_USERS}>
-      {({refetch, loading, error, data = {}}) => {
-        const {allUsers = []} = data
-        return (
-          <Content refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}>
-            <List dataArray={allUsers}
-                  renderRow={(item) => <UserItem {...{item}}/>}/>
-          </Content>
-        )
-      }}
-    </Query>
-  )
+export class ListUser extends React.Component {
+
+  async componentDidMount() {
+
+
+
+  }
+
+  render() {
+    return (
+      <Query query={GET_USERS}>
+        {({refetch, loading, error, data = {}}) => {
+          const {allUsers = []} = data
+          return (
+            <Content refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}>
+              <List dataArray={allUsers}
+                    renderRow={(item) => <UserItem {...{item}}/>}/>
+            </Content>
+          )
+        }}
+      </Query>
+    )
+  }
+
 }
 
 

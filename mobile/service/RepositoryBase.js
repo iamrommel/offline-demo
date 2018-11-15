@@ -1,25 +1,25 @@
 import {checkInternetConnection} from 'react-native-offline'
 
 
-export class StorageBase {
+export class RepositoryBase {
 
-  storage = null
+  repository = null
 
-  onlineOfflineStorageFactory = async (onlineStorage, offlineStorage) => {
+  onlineOfflineRepositoryFactory = async (onlineRepository, offlineRepository) => {
     const hasInternet = await checkInternetConnection()
-    return hasInternet ? onlineStorage : offlineStorage
+    return hasInternet ? onlineRepository : offlineRepository
   }
 
 
   find = async ({where} = {}) => {
 
     //factory where to get the data
-    console.log(this.storage)
+    console.log(this.repository)
 
-    if (!this.storage) throw new Error('Storage is required')
+    if (!this.repository) throw new Error('Repository is required')
 
     //find using the storage factory
-    return storage.find({where})
+    return this.repository.find({where})
 
   }
   _findOne = ({where}) => {

@@ -2,58 +2,44 @@ import React from 'react'
 import {Container, Header, Left, Body, Title, Right, Content} from 'native-base'
 
 import {List} from './List'
-import {UserRepository} from '../../service/UserRepository'
+import {withUser} from '../../container/withUser'
+import {AddUser} from './AddUser'
+import {AppContext} from './Context'
 
 
 export class Manage extends React.Component {
 
-  constructor() {
-    super()
-    this.repository = new UserRepository()
-  }
-
-  state = {users: []}
-
-  get = async () => {
-    const users = await this.repository.find()
-    this.setState({users})
-  }
-
-  add = async () => {
-  }
-
-  delete = async () => {
-  }
-
-
   async componentDidMount() {
-    await this.get()
+    const {get} = this.props
+    await get()
   }
-
 
   render() {
 
-    const {users} = this.state
+    const {users, add, remove} = this.props
 
     return (
-      <Container>
-        <Header>
-          <Left>
+      <AppContext.Provider value={{users, add, remove}}>
+        <Container>
+          <Header>
+            <Left>
+              <AddUser/>
+            </Left>
+            <Body>
+            <Title>User List</Title>
+            </Body>
+            <Right>
 
-          </Left>
-          <Body>
-          <Title>User List</Title>
-          </Body>
-          <Right>
-
-          </Right>
-        </Header>
-        <Content>
-          <List {...{users}}/>
-        </Content>
-      </Container>
+            </Right>
+          </Header>
+          <Content>
+            <List {...{users, remove}}/>
+          </Content>
+        </Container>
+      </AppContext.Provider>
     )
   }
 }
 
 
+Manage = withUser()(Manage)

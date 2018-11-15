@@ -7,8 +7,6 @@ import {persistCache} from 'apollo-cache-persist'
 import {AsyncStorage, Alert} from 'react-native'
 
 import {QueueMutationLink} from './QueueMutationLink'
-import {onConnectionChange} from './onConnectionChange'
-import {SyncOfflineMutation} from './SyncOfflineMutation'
 
 
 export const setupApolloClient = async () => {
@@ -25,8 +23,7 @@ export const setupApolloClient = async () => {
   const cache = new InMemoryCache()
   await persistCache({
     cache,
-    storage,
-    trigger: 'background',
+    storage
   })
 
   let link = ApolloLink.from([
@@ -36,23 +33,7 @@ export const setupApolloClient = async () => {
   ])
 
   const apolloClient = new ApolloClient({link, cache})
-  //sync all local mutation on start up
-  const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})
-  await syncOfflineMutation.init()
 
-  //this should be synching when there is connection only
-  //await syncOfflineMutation.sync()
-
-  const onDisconnect = async () => {
-    queueLink.close()
-  }
-  const onConnect = async () => {
-    //await queueLink.open({apolloClient})
-    await syncOfflineMutation.sync()
-    Alert.alert('Done sync', 'Done synching when connected')
-  }
-
-  onConnectionChange({onDisconnect, onConnect})
 
 
   return apolloClient

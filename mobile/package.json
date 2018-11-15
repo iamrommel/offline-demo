@@ -15,7 +15,8 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
-    "build" : "expo build:android"
+    "build" : "expo build:android",
+    "publish": "expo publish"
   },
   "jest": {
     "preset": "jest-expo"

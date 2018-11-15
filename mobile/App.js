@@ -1,15 +1,17 @@
 import React from 'react'
 import {ApolloProvider} from 'react-apollo'
 import Expo, {AppLoading, Font} from 'expo'
-import {StyleProvider, Container, Root, Header, Left, Button, Icon, Title, Body, Right, Content} from 'native-base'
+import {StyleProvider, Container, Root, Header, Left, Title, Body, Right} from 'native-base'
 import {StatusBar} from 'react-native'
 
 import {setupApolloClient} from './apolloClient'
-import {ListUser} from './ListUser'
 import {AddUser} from './AddUser'
 import {SyncButton} from './SyncButton'
 import getTheme from './theme/components'
 import {MainContent} from './MainContent'
+import {OfflineWarning} from './OfflineWarning'
+import {onConnectionChange} from './onConnectionChange'
+import {SyncOfflineMutation} from '../web/src/SyncOfflineMutation'
 
 
 export default class App extends React.Component {
@@ -30,10 +32,29 @@ export default class App extends React.Component {
 
     const apolloClient = await setupApolloClient()
     this.setState({apolloClient})
+
+    //sync all local mutation on start up
+    const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})
+    await syncOfflineMutation.init()
+
+    //this should be synching when there is connection only
+    //await syncOfflineMutation.sync()
+
+    const onDisconnect = async () => {
+      this.setState({isOffline: true})
+    }
+    const onConnect = async () => {
+      this.setState({isOffline: false})
+      await syncOfflineMutation.sync()
+      Alert.alert('Done sync', 'Done synching when connected')
+    }
+
+    onConnectionChange({onDisconnect, onConnect})
+
   }
 
   render() {
-    const {apolloClient, theme} = this.state
+    const {apolloClient, theme, isOffline} = this.state
 
     if (!this.state.isReady || !apolloClient || !theme) {
       return <AppLoading/>
@@ -44,6 +65,7 @@ export default class App extends React.Component {
         <Root>
           <Container style={{marginTop: StatusBar.currentHeight}}>
             <ApolloProvider client={apolloClient}>
+              <OfflineWarning isOffline={isOffline}/>
               <Container>
                 <Header>
                   <Left>

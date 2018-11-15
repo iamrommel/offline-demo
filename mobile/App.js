@@ -1,18 +1,13 @@
 import React from 'react'
 import {ApolloProvider} from 'react-apollo'
 import Expo, {AppLoading, Font} from 'expo'
-import {StyleProvider, Container, Root, Header, Left, Title, Body, Right} from 'native-base'
+import {StyleProvider, Container, Root, } from 'native-base'
 import {AsyncStorage, StatusBar, Alert} from 'react-native'
 
 import {setupApolloClient} from './apolloClient'
-import {AddUser} from './AddUser'
-import {SyncButton} from './SyncButton'
 import getTheme from './theme/components'
 import {MainContent} from './MainContent'
 import {OfflineWarning} from './OfflineWarning'
-import {onConnectionChange} from './onConnectionChange'
-import {SyncOfflineMutation} from './SyncOfflineMutation'
-import {checkInternetConnection} from 'react-native-offline'
 
 export default class App extends React.Component {
 
@@ -32,31 +27,6 @@ export default class App extends React.Component {
 
     const apolloClient = await setupApolloClient()
     this.setState({apolloClient})
-
-    //sync all local mutation on start up
-    const storage = AsyncStorage
-
-    const syncOfflineMutation = new SyncOfflineMutation({apolloClient, storage})
-    await syncOfflineMutation.init()
-
-    //sync only when there is internet connection
-    const hasInternet =  await checkInternetConnection();
-    if (hasInternet)
-      await syncOfflineMutation.sync()
-
-
-
-    const onDisconnect = async () => {
-      this.setState({isOffline: true})
-    }
-    const onConnect = async () => {
-      this.setState({isOffline: false})
-      await syncOfflineMutation.sync()
-      Alert.alert('Done sync', 'Done synching when connected')
-    }
-
-    onConnectionChange({onDisconnect, onConnect})
-
   }
 
   render() {
@@ -72,20 +42,7 @@ export default class App extends React.Component {
           <Container style={{marginTop: StatusBar.currentHeight}}>
             <ApolloProvider client={apolloClient}>
               <OfflineWarning isOffline={isOffline}/>
-              <Container>
-                <Header>
-                  <Left>
-                    <AddUser/>
-                  </Left>
-                  <Body>
-                  <Title>User List</Title>
-                  </Body>
-                  <Right>
-                    <SyncButton/>
-                  </Right>
-                </Header>
-                <MainContent/>
-              </Container>
+              <MainContent/>
             </ApolloProvider>
           </Container>
         </Root>
@@ -95,3 +52,5 @@ export default class App extends React.Component {
 }
 
 Expo.registerRootComponent(App)
+
+

@@ -27,7 +27,8 @@ export class RepositoryBase {
 
   _findOne = ({where}) => {
   }
-  _insert = ({data}) => {
+  insert = ({data}) => {
+    return this.offlineRepository.insert({data})
   }
   _delete = ({where}) => {
   }

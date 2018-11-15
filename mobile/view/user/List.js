@@ -1,33 +1,20 @@
 import React from 'react'
 import {Text, RefreshControl} from 'react-native'
-import {ListItem, List, Body, Right, Content} from 'native-base'
+import {ListItem, List as NbList, Body, Right, Content} from 'native-base'
 import moment from 'moment'
 
-import {DeleteUserButton} from './DeleteUserButton'
-import {UserRepository} from './service/UserRepository'
+import {DeleteUserButton} from '../../DeleteUserButton'
 
-export class ListUser extends React.Component {
-  state = {allUsers:[]}
-
-  async componentDidMount() {
-    const repository = new UserRepository()
-
-    const allUsers = await repository.find({where: {name: '1'}})
-
-    this.setState({allUsers})
-
-  }
+export class List extends React.Component {
 
   //refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}
 
   render() {
-    const {allUsers} = this.state
+    const {users=[]} = this.props
 
     return (
-      <Content>
-        <List dataArray={allUsers}
+        <NbList dataArray={users}
               renderRow={(item) => <UserItem {...{item}}/>}/>
-      </Content>
     )
   }
 
@@ -38,7 +25,7 @@ const UserItem = ({item}) => {
   return (
     <ListItem>
       <Body>
-      <Text>{item.id}</Text>
+      <Text>{item._id}</Text>
       <Text>{item.name}</Text>
       <Text note>{moment(new Date(item.dateOfBirth)).format('hh:mm:ss.SSS a')}</Text>
       </Body>

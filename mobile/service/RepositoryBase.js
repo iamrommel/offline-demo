@@ -27,11 +27,13 @@ export class RepositoryBase {
 
   _findOne = ({where}) => {
   }
-  insert = ({data}) => {
+  insert = async ({data}) => {
     return this.offlineRepository.insert({data})
   }
-  _delete = ({where}) => {
+  delete = async ({where}) => {
+    return this.offlineRepository.delete({where})
   }
-  _update = ({where, data}) => {
+  update = async ({where, data}) => {
+    return this.offlineRepository.update({where, data})
   }
 }

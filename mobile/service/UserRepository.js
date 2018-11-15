@@ -1,15 +1,16 @@
+import _ from 'lodash'
 import {RepositoryBase} from './RepositoryBase'
 import {userDb} from '../config/pouchDb'
 
 
 export class UserRepository extends RepositoryBase {
   constructor() {
-    super(new UserWebServiceRepository(), new UserSqliteRepository())
+    super(new UserWebServiceRepository(), new UserPouchRepository())
   }
 
   // static async createInstance() {
   //   const o = new UserRepository()
-  //   o.repository = await o.onlineOfflineRepositoryFactory(new UserWebServiceRepository(), new UserSqliteRepository())
+  //   o.repository = await o.onlineOfflineRepositoryFactory(new UserWebServiceRepository(), new UserPouchRepository())
   //   return o
   // }
 
@@ -22,7 +23,10 @@ class UserWebServiceRepository {
   }
 }
 
-class UserSqliteRepository {
+
+
+//NOTE: This can inherit from PouchRepositoryBase
+class UserPouchRepository {
 
   constructor() {
     this.db = userDb
@@ -55,6 +59,14 @@ class UserSqliteRepository {
 
   }
 
+  findOne = async ({where}) => {
+    const docs = await this.find({where})
+
+    //return the first item, of undefined if it cannot find
+    return _.get(docs, '[0]')
+
+  }
+
   find = async ({where}) => {
 
     where = where || {name: {$gte: null}}
@@ -69,6 +81,32 @@ class UserSqliteRepository {
 
   insert = async ({data}) => {
     return this.db.put(data)
+  }
+
+  delete = async ({where}) => {
+    try {
+      const doc = await this.findOne({where})
+      if (!doc)
+        throw new Error('Cannot find the document to delete!')
+
+      //if found do the deletion
+      return this.db.remove(doc)
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  update = async ({where, data}) => {
+    let doc = this.findOne({where})
+
+    //remove the _id from data before merging
+    delete data._id
+
+    //this will mutate the doc
+    _.merge(doc, data)
+
+    return this.db.put(doc)
   }
 
 }

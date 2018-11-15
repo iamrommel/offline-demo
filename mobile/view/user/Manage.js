@@ -21,6 +21,7 @@ export class Manage extends React.Component {
 
   add = async () => {
   }
+
   delete = async () => {
   }
 

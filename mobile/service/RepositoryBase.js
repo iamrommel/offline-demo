@@ -3,7 +3,13 @@ import {checkInternetConnection} from 'react-native-offline'
 
 export class RepositoryBase {
 
-  repository = null
+  offlineRepository = null
+  onlineRepository = null
+  constructor(onlineRepository, offlineRepository) {
+    this.offlineRepository = offlineRepository
+    this.onlineRepository =  onlineRepository
+  }
+
 
   onlineOfflineRepositoryFactory = async (onlineRepository, offlineRepository) => {
     const hasInternet = await checkInternetConnection()
@@ -11,17 +17,14 @@ export class RepositoryBase {
   }
 
 
+  /*
+  * Always get from the offline storage, if there is net connection it will it will automatically sync this values
+  * will use the apollo subscription logic for changes sync
+  * */
   find = async ({where} = {}) => {
-
-    //factory where to get the data
-    console.log(this.repository)
-
-    if (!this.repository) throw new Error('Repository is required')
-
-    //find using the storage factory
-    return this.repository.find({where})
-
+    return this.offlineRepository.find({where})
   }
+
   _findOne = ({where}) => {
   }
   _insert = ({data}) => {

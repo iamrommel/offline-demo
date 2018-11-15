@@ -1,34 +1,33 @@
 import React from 'react'
 import {Text, RefreshControl} from 'react-native'
-import {Query} from 'react-apollo'
 import {ListItem, List, Body, Right, Content} from 'native-base'
 import moment from 'moment'
 
-import {GET_USERS} from './queries'
 import {DeleteUserButton} from './DeleteUserButton'
 import {UserRepository} from './service/UserRepository'
 
 export class ListUser extends React.Component {
+  state = {allUsers:[]}
 
   async componentDidMount() {
+    const repository = new UserRepository()
 
+    const allUsers = await repository.find({where: {name: '1'}})
 
+    this.setState({allUsers})
 
   }
 
+  //refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}
+
   render() {
+    const {allUsers} = this.state
+
     return (
-      <Query query={GET_USERS}>
-        {({refetch, loading, error, data = {}}) => {
-          const {allUsers = []} = data
-          return (
-            <Content refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}>
-              <List dataArray={allUsers}
-                    renderRow={(item) => <UserItem {...{item}}/>}/>
-            </Content>
-          )
-        }}
-      </Query>
+      <Content>
+        <List dataArray={allUsers}
+              renderRow={(item) => <UserItem {...{item}}/>}/>
+      </Content>
     )
   }
 

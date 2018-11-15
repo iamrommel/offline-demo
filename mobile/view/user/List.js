@@ -1,20 +1,25 @@
 import React from 'react'
-import {Text, RefreshControl} from 'react-native'
-import {ListItem, List as NbList, Body, Right, Content} from 'native-base'
+import {Text} from 'react-native'
+import {ListItem, List as NbList, Body, Right} from 'native-base'
 import moment from 'moment'
 
 import {DeleteUserButton} from './DeleteUserButton'
+import {AppContext} from './Context'
 
 export class List extends React.Component {
 
-  //refreshControl={<RefreshControl onRefresh={refetch} refreshing={loading}/>}
 
   render() {
-    const {users=[]} = this.props
-
     return (
-        <NbList dataArray={users}
-              renderRow={(item) => <UserItem {...{item}}/>}/>
+      <AppContext.Consumer>
+        {({users}) => {
+          return (
+            <NbList dataArray={users}
+                    renderRow={(item) => <UserItem {...{item}}/>}/>
+          )
+        }}
+
+      </AppContext.Consumer>
     )
   }
 

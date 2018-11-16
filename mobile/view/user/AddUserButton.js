@@ -4,7 +4,7 @@ import {generateId} from '../../queries'
 import {AppContext} from './Context'
 
 
-export class AddUser extends React.Component {
+export class AddUserButton extends React.Component {
 
   onAdd = async (add) => {
 

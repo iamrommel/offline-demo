@@ -2831,6 +2831,13 @@ debug@2, debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.2, de
   dependencies:
     ms "2.0.0"
 
+debug@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
+  integrity sha1-vFlryr52F/Edn6FTYe3tVgi4SZs=
+  dependencies:
+    ms "0.7.2"
+
 debug@3.1.0, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
@@ -5572,6 +5579,13 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lie@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.0.tgz#65e0139eaef9ae791a1f5c8c53692c8d3b4718f4"
+  integrity sha1-ZeATnq75rnkaH1yMU2ksjTtHGPQ=
+  dependencies:
+    immediate "~3.0.5"
+
 lie@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
@@ -6211,6 +6225,11 @@ morgan@^1.9.0:
     depd "~1.1.1"
     on-finished "~2.3.0"
     on-headers "~1.0.1"
+
+ms@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
+  integrity sha1-riXPJRKziFodldfwN4aNhDESR2U=
 
 ms@2.0.0:
   version "2.0.0"
@@ -7046,6 +7065,15 @@ pouchdb-changes-filter@6.4.3:
     pouchdb-selector-core "6.4.3"
     pouchdb-utils "6.4.3"
 
+pouchdb-checkpointer@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pouchdb-checkpointer/-/pouchdb-checkpointer-6.1.2.tgz#e94120ce3bf86a59d4db62d331ca8ef9d1218792"
+  integrity sha1-6UEgzjv4alnU22LTMcqO+dEhh5I=
+  dependencies:
+    pouchdb-collate "6.1.2"
+    pouchdb-promise "6.1.2"
+    pouchdb-utils "6.1.2"
+
 pouchdb-checkpointer@6.4.3:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/pouchdb-checkpointer/-/pouchdb-checkpointer-6.4.3.tgz#af0e429ca3fe8b86000412f4fc6e9ea98d956992"
@@ -7054,6 +7082,11 @@ pouchdb-checkpointer@6.4.3:
     pouchdb-collate "6.4.3"
     pouchdb-promise "6.4.3"
     pouchdb-utils "6.4.3"
+
+pouchdb-collate@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pouchdb-collate/-/pouchdb-collate-6.1.2.tgz#07a5c18d9cb313c8bc29e45c22c4376addaa58d3"
+  integrity sha1-B6XBjZyzE8i8KeRcIsQ3at2qWNM=
 
 pouchdb-collate@6.4.3:
   version "6.4.3"
@@ -7064,6 +7097,11 @@ pouchdb-collate@7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pouchdb-collate/-/pouchdb-collate-7.0.0.tgz#4f9a0a03c236f1677a971c400b79b7baf6379a4d"
   integrity sha512-0O67rnNGVD9OUbDx+6DLPcE3zz7w6gieNCvrbvaI5ibIXuLpyMyLjD6OdRe/19LbstEfZaOp+SYUhQs+TP8Plg==
+
+pouchdb-collections@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pouchdb-collections/-/pouchdb-collections-6.1.2.tgz#070161cdf485d87ddd29d977e4e8392dabf9313d"
+  integrity sha1-BwFhzfSF2H3dKdl35Og5Lav5MT0=
 
 pouchdb-collections@6.4.3:
   version "6.4.3"
@@ -7102,6 +7140,13 @@ pouchdb-debug@6.4.3:
   dependencies:
     debug "3.1.0"
 
+pouchdb-errors@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pouchdb-errors/-/pouchdb-errors-6.1.2.tgz#1a85aaf8c8a7214148b271e8f1a06b450a7e5e62"
+  integrity sha1-GoWq+MinIUFIsnHo8aBrRQp+XmI=
+  dependencies:
+    inherits "2.0.3"
+
 pouchdb-errors@6.4.3:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/pouchdb-errors/-/pouchdb-errors-6.4.3.tgz#9fa4a13f64ee50c8d593e3235b18b1458977f8d1"
@@ -7137,7 +7182,7 @@ pouchdb-find@^7.0.0:
     pouchdb-selector-core "7.0.0"
     pouchdb-utils "7.0.0"
 
-pouchdb-generate-replication-id@6.4.3:
+pouchdb-generate-replication-id@6.4.3, pouchdb-generate-replication-id@^6.1.2:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/pouchdb-generate-replication-id/-/pouchdb-generate-replication-id-6.4.3.tgz#a11806f511991389c641e81ed46e7460f75bc570"
   integrity sha512-RBgT/67gPd4B7KJP4vcNpYplNpOFVx8A/Nof9MEIrGQ/wqd73bqL/YJDLCsZd1IlR8+3FyrhYxN3xsTt1cUuiA==
@@ -7203,6 +7248,13 @@ pouchdb-merge@6.4.3:
   resolved "https://registry.yarnpkg.com/pouchdb-merge/-/pouchdb-merge-6.4.3.tgz#4ef901f4aaa27be6aec0108998a127fe55bb0628"
   integrity sha512-UuSpex/V1kNr1aXcmg+TQlOdjzMWc08AX/Ja6jrPq9J42M97UFF+7Ijx3JllxDK0j6QJZrvhpvjFzsRhFC4+zw==
 
+pouchdb-promise@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pouchdb-promise/-/pouchdb-promise-6.1.2.tgz#e89f021e513e47ded37195f45b080dd52c4ee6a7"
+  integrity sha1-6J8CHlE+R97TcZX0WwgN1SxO5qc=
+  dependencies:
+    lie "3.1.0"
+
 pouchdb-promise@6.4.3:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/pouchdb-promise/-/pouchdb-promise-6.4.3.tgz#74516f4acf74957b54debd0fb2c0e5b5a68ca7b3"
@@ -7248,6 +7300,30 @@ pouchdb-selector-core@7.0.0:
   dependencies:
     pouchdb-collate "7.0.0"
     pouchdb-utils "7.0.0"
+
+pouchdb-sync-to-anything@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-sync-to-anything/-/pouchdb-sync-to-anything-0.2.0.tgz#80bcf506d0e0e95556a5120efbd3509fefe26e2c"
+  integrity sha512-wTyRc93OQK1HIJ9XwvhFXq+kHd9HDEl3JbDog99Di6mdF0p3ofzIDlYFGyXq7ubYmgTlphhs7iQEeXjNJSkABg==
+  dependencies:
+    inherits "^2.0.3"
+    pouchdb-checkpointer "6.1.2"
+    pouchdb-generate-replication-id "^6.1.2"
+    pouchdb-utils "6.1.2"
+
+pouchdb-utils@6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pouchdb-utils/-/pouchdb-utils-6.1.2.tgz#3cdde6d1d37a396f291849d289a37980673522d9"
+  integrity sha1-PN3m0dN6OW8pGEnSiaN5gGc1Itk=
+  dependencies:
+    argsarray "0.0.1"
+    clone-buffer "1.0.0"
+    debug "2.6.0"
+    immediate "3.0.6"
+    inherits "2.0.3"
+    pouchdb-collections "6.1.2"
+    pouchdb-errors "6.1.2"
+    pouchdb-promise "6.1.2"
 
 pouchdb-utils@6.4.3:
   version "6.4.3"

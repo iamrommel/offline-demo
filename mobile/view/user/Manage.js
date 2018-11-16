@@ -2,9 +2,10 @@ import React from 'react'
 import {Container, Header, Left, Body, Title, Right, Content} from 'native-base'
 
 import {List} from './List'
-import {AddUser} from './AddUser'
+import {AddUserButton} from './AddUserButton'
 import {AppContext} from './Context'
 import {UserRepository} from '../../service/UserRepository'
+import {SyncButton} from './SyncButton'
 
 export class Manage extends React.Component {
   state = {users: []}
@@ -40,13 +41,13 @@ export class Manage extends React.Component {
         <Container>
           <Header>
             <Left>
-              <AddUser/>
+              <AddUserButton/>
             </Left>
             <Body>
             <Title>User List</Title>
             </Body>
             <Right>
-
+              <SyncButton/>
             </Right>
           </Header>
           <Content>

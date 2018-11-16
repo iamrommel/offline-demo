@@ -1,10 +1,11 @@
 import React from 'react'
-import {AsyncStorage} from 'react-native'
 import {Button, Icon} from 'native-base'
 
-import {withSyncOfflineMutation} from './withSyncOfflineMutation'
-
 export class SyncButton extends React.Component {
+
+  onSync = () => {
+
+  }
 
   render() {
     const {syncOfflineMutation} = this.props
@@ -18,4 +19,3 @@ export class SyncButton extends React.Component {
   }
 }
 
-SyncButton = withSyncOfflineMutation({storage: AsyncStorage})(SyncButton)

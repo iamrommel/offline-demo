@@ -1,0 +1,8 @@
+type SyncPayload {
+    data : [String]
+}
+
+extend type Mutation {
+    sync(data: String): SyncPayload
+}
+

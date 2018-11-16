@@ -19,11 +19,11 @@ types: ./types.graphql
 
 
 functions:
-  hello:
+  sync:
     handler:
-      code: src/hello.js
+      code: src/sync.js
     type: resolver
-    schema: src/hello.graphql
+    schema: src/sync.graphql
 
 
 # Model/Relation permissions are used to limit the API access

@@ -4,7 +4,7 @@ import {Container, Header, Left, Body, Title, Right, Content} from 'native-base'
 import {List} from './List'
 import {AddUserButton} from './AddUserButton'
 import {AppContext} from './Context'
-import {UserRepository} from '../../service/UserRepository'
+import {User} from '../../service/repository/User'
 import {SyncButton} from './SyncButton'
 
 export class Manage extends React.Component {
@@ -12,7 +12,7 @@ export class Manage extends React.Component {
 
   constructor(props) {
     super(props)
-    this.repository = new UserRepository()
+    this.repository = new User()
   }
 
   setUsers = async (where = {}) => {

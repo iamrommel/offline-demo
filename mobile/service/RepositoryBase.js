@@ -5,9 +5,10 @@ export class RepositoryBase {
 
   offlineRepository = null
   onlineRepository = null
+
   constructor(onlineRepository, offlineRepository) {
     this.offlineRepository = offlineRepository
-    this.onlineRepository =  onlineRepository
+    this.onlineRepository = onlineRepository
   }
 
 
@@ -35,5 +36,9 @@ export class RepositoryBase {
   }
   update = async ({where, data}) => {
     return this.offlineRepository.update({where, data})
+  }
+
+  sync = async () => {
+    return this.offlineRepository.sync()
   }
 }

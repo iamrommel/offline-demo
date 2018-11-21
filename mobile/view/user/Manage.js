@@ -10,8 +10,8 @@ import {SyncButton} from './SyncButton'
 export class Manage extends React.Component {
   state = {users: []}
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.repository = new UserRepository()
   }
 
@@ -30,14 +30,19 @@ export class Manage extends React.Component {
     await this.setUsers() //TODO: should get the proper filter
   }
 
+  sync = async () => {
+    await this.repository.sync()
+  }
+
   async componentDidMount() {
     await this.setUsers()
   }
 
   render() {
-    const {users} = this.state
+    const {users,} = this.state
+    const {add, remove, sync} = this
     return (
-      <AppContext.Provider value={{users, add: this.add, remove: this.remove}}>
+      <AppContext.Provider value={{users, add, remove, sync}}>
         <Container>
           <Header>
             <Left>

@@ -11,6 +11,7 @@
     "apollo-link-http": "^1.5.4",
     "apollo-link-queue": "^2.0.1",
     "apollo-link-retry": "^2.2.4",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",

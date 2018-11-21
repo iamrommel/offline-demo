@@ -1,21 +1,29 @@
 import React from 'react'
 import {Button, Icon} from 'native-base'
+import {AppContext} from './Context'
 
 export class SyncButton extends React.Component {
 
-  onSync = () => {
-
-  }
 
   render() {
-    const {syncOfflineMutation} = this.props
 
-    if (!syncOfflineMutation) return null
+    return (
+      <AppContext.Consumer>
+        {
+          ({sync}) => {
+            return (
+              <Button transparent
+                      onPress={sync}>
+                <Icon name='refresh'/>
+              </Button>
+            )
+          }
+        }
 
-    return <Button transparent
-                   onPress={() => syncOfflineMutation.sync()}>
-      <Icon name='refresh'/>
-    </Button>
+      </AppContext.Consumer>
+    )
+
+
   }
 }
 

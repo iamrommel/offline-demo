@@ -8,11 +8,6 @@ export class UserRepository extends RepositoryBase {
     super(new UserWebServiceRepository(), new UserPouchRepository())
   }
 
-  // static async createInstance() {
-  //   const o = new UserRepository()
-  //   o.repository = await o.onlineOfflineRepositoryFactory(new UserWebServiceRepository(), new UserPouchRepository())
-  //   return o
-  // }
 
 }
 
@@ -21,8 +16,8 @@ class UserWebServiceRepository {
     //factory where to get the data
     return [{id: 'web service id', name: 'web service name'}]
   }
-}
 
+}
 
 
 //NOTE: This can inherit from PouchRepositoryBase
@@ -108,6 +103,18 @@ class UserPouchRepository {
 
     return this.db.put(doc)
   }
+
+  sync = async () => {
+    let docIds = []
+    const result = await this.db.syncToAnything((docs) => {
+      console.log(JSON.stringify(docs), 'sync data this')
+
+    }, {sync_id: 'user_replication', batch_size: 10})
+
+    //console.log(result)
+
+  }
+
 
 }
 

@@ -1,5 +1,5 @@
 import {Base} from './Base'
-import {User as UserPouchRepository} from './pouchdb/User'
+import {User as UserPouchRepository} from './pouchdbRepository/User'
 
 
 export class User extends Base {

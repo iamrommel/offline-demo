@@ -1,5 +1,5 @@
 import {Base} from './Base'
-import {userDb} from '../../../config/pouchDb'
+import {userDb} from '../../config/pouchDb'
 
 export class User extends Base {
 

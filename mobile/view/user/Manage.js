@@ -29,6 +29,12 @@ export class Manage extends React.Component {
     await this.repository.delete({where})
     await this.setUsers() //TODO: should get the proper filter
   }
+  update = async (user) => {
+    const where = {_id: user._id}
+    user.name = `${user.name}_u`
+    await this.repository.update({where, data: user})
+    await this.setUsers() //TODO: should get the proper filter
+  }
 
   sync = async () => {
     await this.repository.sync()
@@ -40,9 +46,9 @@ export class Manage extends React.Component {
 
   render() {
     const {users,} = this.state
-    const {add, remove, sync} = this
+    const {add, remove, sync, update} = this
     return (
-      <AppContext.Provider value={{users, add, remove, sync}}>
+      <AppContext.Provider value={{users, add, remove, sync, update}}>
         <Container>
           <Header>
             <Left>

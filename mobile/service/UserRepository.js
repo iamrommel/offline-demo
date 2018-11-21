@@ -93,7 +93,7 @@ class UserPouchRepository {
   }
 
   update = async ({where, data}) => {
-    let doc = this.findOne({where})
+    let doc = await this.findOne({where})
 
     //remove the _id from data before merging
     delete data._id
@@ -111,7 +111,7 @@ class UserPouchRepository {
 
     }, {sync_id: 'user_replication', batch_size: 10})
 
-    //console.log(result)
+    console.log(result)
 
   }
 

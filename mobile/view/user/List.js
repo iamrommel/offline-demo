@@ -12,10 +12,10 @@ export class List extends React.Component {
   render() {
     return (
       <AppContext.Consumer>
-        {({users}) => {
+        {({users, update}) => {
           return (
             <NbList dataArray={users}
-                    renderRow={(item) => <UserItem {...{item}}/>}/>
+                    renderRow={(item) => <UserItem {...{item, update}}/>}/>
           )
         }}
 
@@ -26,9 +26,9 @@ export class List extends React.Component {
 }
 
 
-const UserItem = ({item}) => {
+const UserItem = ({item, update}) => {
   return (
-    <ListItem>
+    <ListItem onPress={() => update(item)}>
       <Body>
       <Text>{item._id}</Text>
       <Text>{item.name}</Text>

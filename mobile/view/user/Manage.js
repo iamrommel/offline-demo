@@ -6,6 +6,7 @@ import {AddUserButton} from './AddUserButton'
 import {AppContext} from './Context'
 import {User as UserService} from '../../service/User'
 import {SyncButton} from './SyncButton'
+import {ResetDbButton} from './ResetDbButton'
 
 export class Manage extends React.Component {
   state = {users: []}
@@ -16,24 +17,23 @@ export class Manage extends React.Component {
   }
 
   setUsers = async (where = {}) => {
-    const users = await this.userService.find({where})
+    const users = await this.userService.repository.find({where})
     this.setState({users})
   }
 
   add = async ({data}) => {
-    await this.userService.insert({data})
+    await this.userService.repository.insert({data})
     await this.setUsers() //TODO: should get the proper filter
   }
 
   remove = async ({where}) => {
-    await this.userService.remove({where})
+    await this.userService.repository.remove({where})
     await this.setUsers() //TODO: should get the proper filter
   }
 
   update = async (user) => {
-    const where = {_id: user._id}
     user.name = `${user.name}_u`
-    await this.userService.update({where, data: user})
+    await this.userService.repository.update({docId: user._id, data: user})
     await this.setUsers() //TODO: should get the proper filter
   }
 
@@ -47,9 +47,9 @@ export class Manage extends React.Component {
 
   render() {
     const {users,} = this.state
-    const {add, remove, sync, update} = this
+    const {add, remove, sync, update, userService, setUsers} = this
     return (
-      <AppContext.Provider value={{users, add, remove, sync, update}}>
+      <AppContext.Provider value={{users, add, remove, sync, update, userService, setUsers}}>
         <Container>
           <Header>
             <Left>
@@ -60,6 +60,7 @@ export class Manage extends React.Component {
             </Body>
             <Right>
               <SyncButton/>
+              <ResetDbButton/>
             </Right>
           </Header>
           <Content>

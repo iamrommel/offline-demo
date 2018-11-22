@@ -1,10 +1,13 @@
 import _ from 'lodash'
+import PouchDB from 'pouchdb-react-native'
+
 
 export class Base {
 
-  constructor({db}) {
-    if (!db) throw new Error('Db is required when creating repository')
-    this.db = db
+  constructor({dbName}) {
+    if (!dbName) throw new Error('dbName is required when creating repository')
+    this.dbName = dbName
+    this.db = new PouchDB(dbName)
   }
 
 
@@ -50,9 +53,9 @@ export class Base {
     return this.db.put(data)
   }
 
-  delete = async ({where, docId}) => {
+  remove = async ({where, docId}) => {
 
-    const doc = this.findAndThrow({where, docId})
+    const doc = await this.findAndThrow({where, docId})
 
     //if found do the deletion
     return this.db.remove(doc)
@@ -61,7 +64,7 @@ export class Base {
   }
 
   update = async ({where, data, docId}) => {
-    const doc = this.findAndThrow({where, docId})
+    const doc = await this.findAndThrow({where, docId})
 
     //remove the _id from data before merging
     delete data._id
@@ -72,15 +75,13 @@ export class Base {
     return this.db.put(doc)
   }
 
-  sync = async () => {
-    let docIds = []
-    const result = await this.db.syncToAnything((docs) => {
-      console.log(JSON.stringify(docs), 'sync data this')
-
-    }, {sync_id: 'user_replication', batch_size: 10})
-
-    console.log(result)
-
+  clearDb = async () => {
+    try {
+      await this.db.destroy()
+      this.db = new PouchDB(this.dbName)
+      return {destroyed: true}
+    } catch (e) {
+      return {error: e}
+    }
   }
-
 }

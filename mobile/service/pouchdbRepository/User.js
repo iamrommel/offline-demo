@@ -5,8 +5,7 @@ export class User extends Base {
 
   constructor() {
 
-    super({db: userDb})
-
+    super({dbName: 'userDb'})
 
     //ignore the result of seed
     this.seed()

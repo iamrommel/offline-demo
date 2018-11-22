@@ -10,9 +10,7 @@ export class DeleteUserButton extends React.Component {
 
   onDelete = async (remove) => {
     const {data} = this.props
-    const where = {_id: data._id}
-
-    await remove({where})
+    await remove({docId: data._id})
   }
 
   render() {

@@ -4,16 +4,20 @@ import {AppContext} from './Context'
 
 export class SyncButton extends React.Component {
 
+  onSync = async ({userService}) => {
+    await userService.sync()
+  }
+
 
   render() {
 
     return (
       <AppContext.Consumer>
         {
-          ({sync}) => {
+          (context) => {
             return (
               <Button transparent
-                      onPress={sync}>
+                      onPress={() => this.onSync(context)}>
                 <Icon name='refresh'/>
               </Button>
             )

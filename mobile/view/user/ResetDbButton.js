@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Text} from 'native-base'
+import {Button, Text, Icon} from 'native-base'
 
 import {AppContext} from './Context'
 
@@ -19,7 +19,7 @@ export class ResetDbButton extends React.Component {
         {({userService, setUsers}) => {
           return (
             <Button full danger onPress={() => this.onReset({userService, setUsers})}>
-              <Text>Reset Db</Text>
+              <Icon name="trash"/>
             </Button>
           )
         }}

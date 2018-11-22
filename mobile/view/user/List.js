@@ -12,23 +12,28 @@ export class List extends React.Component {
   render() {
     return (
       <AppContext.Consumer>
-        {({users, update}) => {
+        {({users, userService, setUsers}) => {
           return (
             <NbList dataArray={users}
-                    renderRow={(item) => <UserItem {...{item, update}}/>}/>
+                    renderRow={(item) => <UserItem {...{item, userService, setUsers}}/>}/>
           )
         }}
 
       </AppContext.Consumer>
     )
   }
-
 }
 
+const update = async ({item, userService, setUsers}) => {
+  item.name = `${item.name}_u`
+  await userService.repository.update({docId: item._id, data: item})
+  await setUsers() //TODO: should get the proper filter
+}
 
-const UserItem = ({item, update}) => {
+const UserItem = ({item, userService, setUsers}) => {
+
   return (
-    <ListItem onPress={() => update(item)}>
+    <ListItem onPress={() => update({item, userService, setUsers})}>
       <Body>
       <Text>{item._id}</Text>
       <Text>{item.name}</Text>

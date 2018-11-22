@@ -8,17 +8,19 @@ export class DeleteUserButton extends React.Component {
 
   state = {loading: false}
 
-  onDelete = async (remove) => {
+  onDelete = async ({userService, setUsers}) => {
     const {data} = this.props
-    await remove({docId: data._id})
+    const docId = data._id
+    await userService.repository.remove({docId})
+    await setUsers() //TODO: should get the proper filter
   }
 
   render() {
     return (
       <AppContext.Consumer>
-        {({remove}) => {
+        {(context) => {
           return (
-            <Button full danger onPress={() => this.onDelete(remove)}>
+            <Button full danger onPress={() => this.onDelete(context)}>
               <Icon active name='trash'/>
             </Button>
           )

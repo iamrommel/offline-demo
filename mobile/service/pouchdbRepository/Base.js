@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import PouchDB from 'pouchdb-react-native'
+import '../../config/pouchDb' //just need to import it to run the plugins setup
 
 
 export class Base {

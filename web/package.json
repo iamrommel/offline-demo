@@ -13,11 +13,13 @@
     "apollo-link-retry": "^2.2.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "express-pouchdb": "^4.1.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "moment": "^2.22.2",
     "pcmli.umbrella.core": "^8.0.1",
     "pcmli.umbrella.uni-core": "^0.7.18",
+    "pouchdb": "^7.0.0",
     "react": "^16.4.1",
     "react-apollo": "^2.1.4",
     "react-bootstrap": "^0.32.1",
@@ -30,7 +32,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start:server": "nodemon --exec babel-node src/server/index.js"
+    "start:server": "nodemon  --watch src --exec babel-node src/server/index.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

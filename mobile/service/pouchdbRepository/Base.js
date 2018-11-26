@@ -8,6 +8,19 @@ export class Base {
     if (!dbName) throw new Error('dbName is required when creating repository')
     this.dbName = dbName
     this.db = new PouchDB(dbName)
+
+    //
+    // this.db.changes({
+    //   since: 'now',
+    //   live: true,
+    //   include_docs: true
+    // }).on('change', () => {
+    //
+    //
+    //
+    //
+    //
+    // });
   }
 
 

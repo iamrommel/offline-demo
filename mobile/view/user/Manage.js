@@ -37,7 +37,7 @@ export class Manage extends React.Component {
             </Left>
             <Body>
 
-            <Title>User List</Title>
+            <Title>All users</Title>
             </Body>
             <Right>
               <SyncButton/>

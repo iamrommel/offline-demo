@@ -18,7 +18,7 @@ export class ResetDbButton extends React.Component {
       <AppContext.Consumer>
         {({userService, setUsers}) => {
           return (
-            <Button full danger onPress={() => this.onReset({userService, setUsers})}>
+            <Button transparent onPress={() => this.onReset({userService, setUsers})}>
               <Icon name="trash"/>
             </Button>
           )

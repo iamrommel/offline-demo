@@ -10,5 +10,10 @@
       "package": "com.totalmilk.offlinedemo",
       "versionCode": 1
     }
+  },
+  "settings" : {
+    "pouchDB" : {
+      "serviceBaseUrl" : "https://4c541e44.ngrok.io/pouch"
+    }
   }
 }

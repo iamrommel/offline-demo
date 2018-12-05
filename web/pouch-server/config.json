@@ -1,0 +1,7 @@
+{
+  "couchdb": {
+    "uuid": "b88220c3-94cb-4db9-9098-62adaebda7ad"
+  },
+  "port": "5000",
+  "dir": "./pouch-server"
+}

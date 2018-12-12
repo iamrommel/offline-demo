@@ -14,6 +14,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-pouchdb": "^4.1.0",
+    "follow": "^1.1.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
     "moment": "^2.22.2",
@@ -34,7 +35,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "start:server": "nodemon  --watch src --exec babel-node src/server/index.js",
-    "pouch-server" : "pouchdb-server -n -p 5000 -d ./pouch-server"
+    "pouch-server": "pouchdb-server -n -p 5000 -d ./pouch-server"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

@@ -5,12 +5,10 @@ import {AppContext} from './Context'
 export class SyncButton extends React.Component {
 
   onSync = async ({userService}) => {
-    await userService.sync()
+    await userService.sync({live: true})
   }
 
-
   render() {
-
     return (
       <AppContext.Consumer>
         {

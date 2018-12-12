@@ -143,6 +143,8 @@ export class Base {
     try {
       //sent this to the server
       url = url || 'https://63b2c39b.ngrok.io/sync/tickets'
+
+      //TODO: This should support the time-out for fetch
       let serverResult = await fetch(url, {
         method: 'POST',
         headers: {

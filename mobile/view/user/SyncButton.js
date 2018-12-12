@@ -5,7 +5,8 @@ import {AppContext} from './Context'
 export class SyncButton extends React.Component {
 
   onSync = async ({userService}) => {
-    await userService.sync({live: true})
+    const url = "https://63b2c39b.ngrok.io/sync/tickets"
+    await userService.repository.sync({url})
   }
 
   render() {

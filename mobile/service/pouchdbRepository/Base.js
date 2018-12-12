@@ -100,6 +100,9 @@ export class Base {
     //get the last sequence that was stored from locally
     let lastSeq = (await AsyncStorage.getItem(this.key)) || 0
 
+    //temporary
+    lastSeq = 0
+
     const pouchChanges = await this.db.changes({
       since: lastSeq,
       include_docs: true
@@ -136,8 +139,14 @@ export class Base {
     })
   }
 
+  mapDocForSync = (doc) => {
+    return doc
+  }
+
   _restSync = async ({results, url, last_seq}) => {
     const docs = this._getDocsForSync(results)
+
+    console.log(JSON.stringify(docs), 'docs for sync')
 
     //TODO: put some unit test here
     try {
@@ -162,17 +171,20 @@ export class Base {
         return {success: true, didSync: true}
       }
     } catch (e) {
+      console.log(e, 'error')
       return {success: false, didSync: true, error: e}
     }
   }
 
   _getDocsForSync = (results) => {
     //get only the documents, that are not design documents
-    return results.map(m => {
-      let {doc} = m
-      delete doc._rev
-      return doc
-    }).filter(m => m.language !== 'query')
+    return results
+      .filter(m => m.doc.language !== 'query')
+      .map(m => {
+        let {doc} = m
+        delete doc._rev
+        return this.mapDocForSync(doc)
+      })
   }
 
 }
